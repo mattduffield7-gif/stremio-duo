@@ -1,3 +1,5 @@
+> **Stremio Duo:** Matt Duffield's unofficial fork of the official Stremio Web interface. On touch devices, navigation fades while scrolling down and returns while scrolling up. Wide touch layouts place the rail on the right; narrow layouts retain bottom tabs. See [Duo notes](docs/DUO.md) for validation and native-app limitations. Original project documentation follows.
+
 <div align="center">
 
 <img src="/assets/images/stremio_symbol.png" width="90" alt="Stremio logo">

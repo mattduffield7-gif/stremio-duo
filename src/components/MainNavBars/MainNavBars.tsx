@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { VerticalNavBar, HorizontalNavBar } from 'stremio/components/NavBar';
 import { useContentGamepadNavigation, useVerticalNavGamepadNavigation } from 'stremio/services/GamepadNavigation';
 import styles from './MainNavBars.less';
+import useScrollNavigation from './useScrollNavigation';
 
 const TABS = [
     { id: 'board', label: 'Board', icon: 'home', href: '/' },
@@ -23,15 +24,18 @@ type Props = {
 };
 
 const MainNavBars = memo(({ className, route, query, children }: Props) => {
-    const navRef = React.useRef(null);
-    const contentRef = React.useRef(null);
+    const navRef = React.useRef<HTMLDivElement>(null);
+    const contentRef = React.useRef<HTMLDivElement>(null);
+    const navigationHidden = useScrollNavigation(contentRef, navRef, route);
 
     const navRoute = route === 'continue_watching' ? 'library' : (route ?? '');
     useContentGamepadNavigation(contentRef, navRoute);
     useVerticalNavGamepadNavigation(navRef, navRoute);
 
     return (
-        <div className={classnames(className, styles['main-nav-bars-container'])}>
+        <div className={classnames(className, styles['main-nav-bars-container'], {
+            [styles['navigation-hidden']]: navigationHidden
+        })}>
             <HorizontalNavBar
                 className={styles['horizontal-nav-bar']}
                 route={route}

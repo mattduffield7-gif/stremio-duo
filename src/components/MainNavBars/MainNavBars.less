@@ -37,6 +37,46 @@
     }
 }
 
+// Duo/touch layout: right-hand rail on wide screens, bottom tabs when folded/narrow.
+// Keep geometry stable while fading: no scroll-position jump or expensive layout animation.
+@media (any-pointer: coarse) {
+    .main-nav-bars-container {
+        .vertical-nav-bar {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 200ms ease-out, visibility 0s;
+        }
+
+        &.navigation-hidden .vertical-nav-bar {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 160ms ease-out, visibility 0s 160ms;
+        }
+    }
+}
+
+@media (any-pointer: coarse) and (min-width: (@minimum + 1px)) {
+    .main-nav-bars-container {
+        .vertical-nav-bar {
+            left: auto;
+            right: 0;
+        }
+
+        .nav-content-container {
+            left: 0;
+            right: var(--vertical-nav-bar-size);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main-nav-bars-container .vertical-nav-bar,
+    .main-nav-bars-container.navigation-hidden .vertical-nav-bar {
+        transition: none;
+    }
+}
+
 @media only screen and (max-width: @minimum) {
     .main-nav-bars-container {
         .nav-content-container {
